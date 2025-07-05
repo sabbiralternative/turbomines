@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 13px; /* default (smallest) */
+}
+
+@media (min-width: 320px) {
+  html {
+    font-size: 14px; /* iPhone SE etc. */
+  }
+}
+
+@media (min-width: 375px) {
+  html {
+    font-size: 16px; /* iPhone XR */
+  }
+}
+
+@media (min-width: 390px) {
+  html {
+    font-size: 17px; /* iPhone 12 Pro */
+  }
+}
+
+@media (min-width: 414px) {
+  html {
+    font-size: 18px; /* iPhone 14 Pro / Pixel 7 */
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px; /* tablets and up */
+  }
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/ddc7f8242457fe9b7fe2.eot);
+  src: local("Gilroy Regular Italic"), local("Gilroy-RegularItalic"),
+    url(/font/ddc7f8242457fe9b7fe2.eot?#iefix) format("embedded-opentype"),
+    url(/font/cd8c71a8df152621a239.woff) format("woff"),
+    url(/font/8bbf15be10d36d90b341.ttf) format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/e7028e6c1a94b1d5845c.eot);
+  src: local("Gilroy UltraLight"), local("Gilroy-UltraLight"),
+    url(/font/e7028e6c1a94b1d5845c.eot?#iefix) format("embedded-opentype"),
+    url(/font/d23a0edf71fe026ab53f.woff) format("woff"),
+    url(/font/68e17ccd6916d61b2671.ttf) format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/a732fed1bc6140852a0b.eot);
+  src: local("Gilroy Bold"), local("Gilroy-Bold"),
+    url(/font/a732fed1bc6140852a0b.eot?#iefix) format("embedded-opentype"),
+    url(/font/5fb38b9fa452b5814397.woff) format("woff"),
+    url(/font/b900325e44ec0c673e88.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/724e5c2f79549caa168b.eot);
+  src: local("Gilroy Thin"), local("Gilroy-Thin"),
+    url(/font/724e5c2f79549caa168b.eot?#iefix) format("embedded-opentype"),
+    url(/font/6e2e7d472d0beb6b3cef.woff) format("woff"),
+    url(/font/a21a139f0613c0f6f97c.ttf) format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/724ac9b214f34923b443.eot);
+  src: local("Gilroy Black"), local("Gilroy-Black"),
+    url(/font/724ac9b214f34923b443.eot?#iefix) format("embedded-opentype"),
+    url(/font/1f5dc7482c1aec4cc827.woff) format("woff"),
+    url(/font/bf3a5f799e6799d48062.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fm-iconFont";
+  src: url(/font/6529c3b27a2675499407.ttf?bff4a47caa151ea74cca23a47cf885f9)
+      format("truetype"),
+    url(/font/553131389f97f0ecce9b.woff?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff"),
+    url(/font/74d4371017279ba0c19c.woff2?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/b84941b7bdcce7cbba6d.eot);
+  src: local("Gilroy Medium"), local("Gilroy-Medium"),
+    url(/font/b84941b7bdcce7cbba6d.eot?#iefix) format("embedded-opentype"),
+    url(/font/2bc7f5d7ea77ee1bddb3.woff) format("woff"),
+    url(/font/f9f832b0ed3f1ab138c9.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/9000ed2a78b7dba6fcd6.eot);
+  src: local("Gilroy ExtraBold"), local("Gilroy-ExtraBold"),
+    url(/font/9000ed2a78b7dba6fcd6.eot?#iefix) format("embedded-opentype"),
+    url(/font/cb761043a2e505ff53c1.woff) format("woff"),
+    url(/font/0ac6879cd286550da903.ttf) format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/e5573649af7dcdf70fce.eot);
+  src: local("Gilroy Heavy"), local("Gilroy-Heavy"),
+    url(/font/e5573649af7dcdf70fce.eot?#iefix) format("embedded-opentype"),
+    url(/font/d7504387e1cad66d83bb.woff) format("woff"),
+    url(/font/73c8d039d56e768155e7.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/485f80e442954003a71d.eot);
+  src: local("Gilroy Light Italic"), local("Gilroy-LightItalic"),
+    url(/font/485f80e442954003a71d.eot?#iefix) format("embedded-opentype"),
+    url(/font/3da028f10ef5201fe09e.woff) format("woff"),
+    url(/font/181ce0ec04c8aae82d7a.ttf) format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/074ed56dcf27e4eb60a9.eot);
+  src: local("Gilroy Thin Italic"), local("Gilroy-ThinItalic"),
+    url(/font/074ed56dcf27e4eb60a9.eot?#iefix) format("embedded-opentype"),
+    url(/font/934c6cd5b957baffdd3c.woff) format("woff"),
+    url(/font/746b432908b1935b5459.ttf) format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/8cac949fa0f2dc101aab.eot);
+  src: local("Gilroy Black Italic"), local("Gilroy-BlackItalic"),
+    url(/font/8cac949fa0f2dc101aab.eot?#iefix) format("embedded-opentype"),
+    url(/font/39c229f1b9cb6ad27277.woff) format("woff"),
+    url(/font/0adb2dc396b0d50fd7c8.ttf) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/7e335b28c8a0a45b54a5.eot);
+  src: local("Gilroy Bold Italic"), local("Gilroy-BoldItalic"),
+    url(/font/7e335b28c8a0a45b54a5.eot?#iefix) format("embedded-opentype"),
+    url(/font/82ec4c70dc3b4c6acf4b.woff) format("woff"),
+    url(/font/6bea4a42006eead35863.ttf) format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/8134b9ab378c54626928.eot);
+  src: local("Gilroy SemiBold"), local("Gilroy-SemiBold"),
+    url(/font/8134b9ab378c54626928.eot?#iefix) format("embedded-opentype"),
+    url(/font/e38937dbf8202c144802.woff) format("woff"),
+    url(/font/6780292641f883b3dad3.ttf) format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/0eaf6ee1ff3eea926e17.eot);
+  src: local("Gilroy UltraLight Italic"), local("Gilroy-UltraLightItalic"),
+    url(/font/0eaf6ee1ff3eea926e17.eot?#iefix) format("embedded-opentype"),
+    url(/font/371171f497213b33c43a.woff) format("woff"),
+    url(/font/8c3864ffd690ca16c188.ttf) format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/2a3e284c8733dfc399f4.eot);
+  src: local("Gilroy SemiBold Italic"), local("Gilroy-SemiBoldItalic"),
+    url(/font/2a3e284c8733dfc399f4.eot?#iefix) format("embedded-opentype"),
+    url(/font/56127a256ebf94fa0f86.woff) format("woff"),
+    url(/font/3de62e3c7749ac7c5e73.ttf) format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/8862796bffbd019727b3.eot);
+  src: local("Gilroy Light"), local("Gilroy-Light"),
+    url(/font/8862796bffbd019727b3.eot?#iefix) format("embedded-opentype"),
+    url(/font/9df2f5dbbb9c90a6ede7.woff) format("woff"),
+    url(/font/1b7fff53076b21283967.ttf) format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/656d4f138a8b7faa650b.eot);
+  src: local("Gilroy Medium Italic"), local("Gilroy-MediumItalic"),
+    url(/font/656d4f138a8b7faa650b.eot?#iefix) format("embedded-opentype"),
+    url(/font/84d4545b74fc0406d16e.woff) format("woff"),
+    url(/font/055223ccbf36e5634a28.ttf) format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/2b33fbbd258ef0002828.eot);
+  src: local("Gilroy ExtraBold Italic"), local("Gilroy-ExtraBoldItalic"),
+    url(/font/2b33fbbd258ef0002828.eot?#iefix) format("embedded-opentype"),
+    url(/font/2df7a557113fdb81a838.woff) format("woff"),
+    url(/font/9c9417e446a6e199201a.ttf) format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/1d051d9d4215c09cbcaa.eot);
+  src: local("Gilroy Regular"), local("Gilroy-Regular"),
+    url(/font/1d051d9d4215c09cbcaa.eot?#iefix) format("embedded-opentype"),
+    url(/font/31d54a4b841c0e438f13.woff) format("woff"),
+    url(/font/b91b0127c56a8e5f9e83.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url(/font/ede9efc5b390b58e7a1e.eot);
+  src: local("Gilroy Heavy Italic"), local("Gilroy-HeavyItalic"),
+    url(/font/ede9efc5b390b58e7a1e.eot?#iefix) format("embedded-opentype"),
+    url(/font/83e72a406b9dbf18b9f6.woff) format("woff"),
+    url(/font/86557514a7a1212cf2e8.ttf) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "fm-iconFont";
+  src: url(/font/6529c3b27a2675499407.ttf?bff4a47caa151ea74cca23a47cf885f9)
+      format("truetype"),
+    url(/font/553131389f97f0ecce9b.woff?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff"),
+    url(/font/74d4371017279ba0c19c.woff2?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff2");
+}
+
+@font-face {
+  font-family: "fm-iconFont";
+  src: url(/font/6529c3b27a2675499407.ttf?bff4a47caa151ea74cca23a47cf885f9)
+      format("truetype"),
+    url(/font/553131389f97f0ecce9b.woff?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff"),
+    url(/font/74d4371017279ba0c19c.woff2?bff4a47caa151ea74cca23a47cf885f9)
+      format("woff2");
+}
+
+@font-face {
+  font-family: "iconFont";
+  src: url(/font/529ff3be5b8fc42cf2ce.ttf?12a60a7cbfd517a8faa261b837655338)
+      format("truetype"),
+    url(/font/8ff28e8cc79a9740bd50.woff?12a60a7cbfd517a8faa261b837655338)
+      format("woff"),
+    url(/font/7cdccc2cfbb62612c2f2.woff2?12a60a7cbfd517a8faa261b837655338)
+      format("woff2");
+}
