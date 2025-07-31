@@ -9,22 +9,38 @@ const Boxes = ({
   boxGrid,
   showWinModal,
   betAmount,
+  activeBoxCount,
+  addOrder,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
-  const [loadingBoxId, setLoadingBoxId] = useState(null);
+  // const [loadingBoxId, setLoadingBoxId] = useState(null);
 
-  const handleBoxClick = (box) => {
+  const handleBoxClick = async (box) => {
     if (isStartGame) {
-      setLoadingBoxId(box.id);
-      setTimeout(() => {
-        setLoadingBoxId(null);
-        if (box.mine) {
-          const updatedBoxes = boxData?.map((boxObj) => ({
+      // setLoadingBoxId(box.id);
+
+      const round_id = sessionStorage.getItem("round_id");
+      const payload = [
+        {
+          round_id: Number(round_id),
+          type: "select_box",
+          box_id: box?.id,
+          box_count: activeBoxCount,
+          eventId: 20002,
+        },
+      ];
+      const res = await addOrder(payload).unwrap();
+
+      if (res.success) {
+        // setLoadingBoxId(null);
+        if (res?.gem === 0) {
+          const updatedBoxes = boxData?.map((boxObj, i) => ({
             ...boxObj,
             roundEnd: true,
-            win: boxObj?.mine ? false : boxObj.win,
+            win: res?.all?.[i] === 0 ? false : true,
+            mine: res?.all?.[i] === 0 ? true : false,
             showBox: boxObj.mine ? false : boxObj.win ? false : true,
-            opacityFull: boxObj.mine && box.id === boxObj.id ? true : false,
+            opacityFull: boxObj.win || box.id === boxObj.id ? true : false,
           }));
           setBoxData(updatedBoxes);
           setIsStartGame(false);
@@ -35,12 +51,13 @@ const Boxes = ({
                   ...boxObj,
                   win: true,
                   showBox: false,
+                  opacityFull: true,
                 }
               : boxObj
           );
           setBoxData(updatedBoxes);
         }
-      }, 200);
+      }
     } else {
       setShowWarning(true);
       setTimeout(() => {
@@ -48,8 +65,6 @@ const Boxes = ({
       }, 2000);
     }
   };
-
-  console.log(loadingBoxId);
 
   return (
     <div className="template__game">
@@ -67,7 +82,8 @@ const Boxes = ({
                   box?.mine &&
                     box?.roundEnd &&
                     !box?.opacityFull &&
-                    "_bomb _end"
+                    "_bomb _end",
+                  box?.opacityFull ? "opacity-100" : "opacity-25"
                 )}
               >
                 <div className="game__item-layout1">
