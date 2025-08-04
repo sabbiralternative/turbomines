@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { useOrderMutation } from "../../redux/features/events/events";
 import { generateRoundId } from "../../utils/generateRoundId";
 import toast from "react-hot-toast";
+import { useAuth } from "../../hooks/auth";
 const minesNumber = {
   3: [2, 3, 5, 7],
   5: [3, 5, 7, 10],
@@ -19,12 +20,14 @@ const boxes = {
 };
 
 const Home = () => {
+  const { mutate: handleAuth } = useAuth();
   const [addOrder] = useOrderMutation();
   const [betAmount, setBetAmount] = useState(100);
   const [boxGrid, setBoxGrid] = useState(5);
   const [mines, setMines] = useState(3);
   const [isStartGame, setIsStartGame] = useState(false);
   const [showWinModal, setShowWinModal] = useState(false);
+  const [selectedBoxes, setSelectedBoxes] = useState([]);
   // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [isDesktop, setIsDesktop] = useState(false);
   const initialBoxData = Array.from({ length: boxes[boxGrid] }, (_, i) => ({
@@ -63,6 +66,7 @@ const Home = () => {
 
   const handleStartGame = async () => {
     if (betAmount) {
+      setSelectedBoxes([]);
       setBoxData(initialBoxData);
       const round_id = generateRoundId();
       sessionStorage.removeItem("round_id");
@@ -80,6 +84,7 @@ const Home = () => {
       ];
       const res = await addOrder(payload).unwrap();
       if (res?.success) {
+        handleAuth();
         setIsStartGame(true);
         setTimeout(() => {
           let recentResult = [];
@@ -107,26 +112,29 @@ const Home = () => {
         type: "cashout",
         box_count: activeBoxCount,
         eventId: 20002,
+        selected_tiles: selectedBoxes,
       },
     ];
-    const findBoxAndChange = boxData?.map((boxObj) => ({
-      ...boxObj,
-      win: boxObj?.mine ? false : boxObj.win,
-      roundEnd: true,
-      showBox: boxObj.mine ? false : boxObj.win ? false : true,
-    }));
-    await addOrder(payload).unwrap();
-    setBoxData(findBoxAndChange);
-    setIsStartGame(false);
-    setShowWinModal(true);
 
-    setTimeout(() => {
-      setShowWinModal(false);
-    }, 2000);
+    const res = await addOrder(payload).unwrap();
+    if (res?.success) {
+      const findBoxAndChange = boxData?.map((boxObj, i) => ({
+        ...boxObj,
+        win: res?.all?.[i] === 0 ? false : boxObj.win,
+        roundEnd: true,
+        showBox: res?.all?.[i] === 0 ? false : boxObj.win ? false : true,
+      }));
+      setBoxData(findBoxAndChange);
+      setIsStartGame(false);
+      setShowWinModal(true);
+      setTimeout(() => {
+        setShowWinModal(false);
+      }, 2000);
 
-    setTimeout(() => {
-      setBoxData(initialBoxData);
-    }, 2500);
+      setTimeout(() => {
+        setBoxData(initialBoxData);
+      }, 2500);
+    }
   };
 
   useEffect(() => {
@@ -169,6 +177,8 @@ const Home = () => {
         <div className="template__inner">
           <div className="template__portrait-logo" />
           <Boxes
+            setSelectedBoxes={setSelectedBoxes}
+            selectedBoxes={selectedBoxes}
             activeBoxCount={activeBoxCount}
             addOrder={addOrder}
             betAmount={betAmount}

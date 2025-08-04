@@ -11,6 +11,8 @@ const Boxes = ({
   betAmount,
   activeBoxCount,
   addOrder,
+  selectedBoxes,
+  setSelectedBoxes,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
   // const [loadingBoxId, setLoadingBoxId] = useState(null);
@@ -27,12 +29,13 @@ const Boxes = ({
           box_id: box?.id,
           box_count: activeBoxCount,
           eventId: 20002,
+          selected_tiles: [...selectedBoxes, box?.id],
         },
       ];
       const res = await addOrder(payload).unwrap();
 
       if (res.success) {
-        // setLoadingBoxId(null);
+        setSelectedBoxes((prev) => [...prev, box?.id]);
         if (res?.gem === 0) {
           const updatedBoxes = boxData?.map((boxObj, i) => ({
             ...boxObj,
