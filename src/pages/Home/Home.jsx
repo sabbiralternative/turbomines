@@ -14,7 +14,7 @@ const minesNumber = {
 };
 const boxes = {
   3: 9,
-  5: 20,
+  5: 25,
   7: 49,
   9: 81,
 };
@@ -22,7 +22,7 @@ const boxes = {
 const Home = () => {
   const { mutate: handleAuth } = useAuth();
   const [addOrder] = useOrderMutation();
-  const [betAmount, setBetAmount] = useState(100);
+  const [betAmount, setBetAmount] = useState(50);
   const [boxGrid, setBoxGrid] = useState(5);
   const [mines, setMines] = useState(3);
   const [isStartGame, setIsStartGame] = useState(false);
@@ -30,10 +30,13 @@ const Home = () => {
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   // const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [current_multiplier, setCurrentMultiplier] = useState(0);
+  const [winMultiplier, setWinMultiplier] = useState(null);
+
   const initialBoxData = Array.from({ length: boxes[boxGrid] }, (_, i) => ({
     name: `box${i + 1}`,
     id: i + 1,
-    mine: (i + 1) % boxGrid === 0,
+    mine: false,
     showBox: true,
     win: false,
     roundEnd: false,
@@ -66,6 +69,7 @@ const Home = () => {
 
   const handleStartGame = async () => {
     if (betAmount) {
+      setWinMultiplier(null);
       setSelectedBoxes([]);
       setBoxData(initialBoxData);
       const round_id = generateRoundId();
@@ -86,6 +90,10 @@ const Home = () => {
       if (res?.success) {
         handleAuth();
         setIsStartGame(true);
+        setCurrentMultiplier(
+          (Number(res?.current_multiplier) * betAmount).toFixed(2)
+        );
+
         setTimeout(() => {
           let recentResult = [];
           const recentStoredResult = localStorage.getItem("recentResult");
@@ -118,17 +126,20 @@ const Home = () => {
 
     const res = await addOrder(payload).unwrap();
     if (res?.success) {
+      setWinMultiplier(res?.win_multiplier);
       const findBoxAndChange = boxData?.map((boxObj, i) => ({
         ...boxObj,
         win: res?.all?.[i] === 0 ? false : boxObj.win,
         roundEnd: true,
         showBox: res?.all?.[i] === 0 ? false : boxObj.win ? false : true,
+        mine: res?.all?.[i] === 0 ? true : false,
       }));
       setBoxData(findBoxAndChange);
       setIsStartGame(false);
       setShowWinModal(true);
       setTimeout(() => {
         setShowWinModal(false);
+        setWinMultiplier(null);
       }, 2000);
 
       setTimeout(() => {
@@ -145,7 +156,6 @@ const Home = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1000) {
-        console.log(window.innerWidth);
         // setDeviceWidth(400);
         setIsDesktop(true);
       } else {
@@ -177,6 +187,9 @@ const Home = () => {
         <div className="template__inner">
           <div className="template__portrait-logo" />
           <Boxes
+            current_multiplier={current_multiplier}
+            winMultiplier={winMultiplier}
+            setCurrentMultiplier={setCurrentMultiplier}
             setSelectedBoxes={setSelectedBoxes}
             selectedBoxes={selectedBoxes}
             activeBoxCount={activeBoxCount}
@@ -190,6 +203,7 @@ const Home = () => {
             isStartGame={isStartGame}
           />
           <BetSlip
+            current_multiplier={current_multiplier}
             handleCashOut={handleCashOut}
             isAtLeastOneBoxWin={isAtLeastOneBoxWin}
             isStartGame={isStartGame}

@@ -107,7 +107,11 @@ const Settings = ({
             </div>
             <div className="control-group__row">
               {minesNumbers[boxGrid].map((mine) => (
-                <div key={mine} className="button-secondary">
+                <div
+                  onClick={() => setMines(mine)}
+                  key={mine}
+                  className="button-secondary"
+                >
                   {mine}
                 </div>
               ))}

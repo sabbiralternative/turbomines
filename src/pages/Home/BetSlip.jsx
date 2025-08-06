@@ -13,6 +13,7 @@ const BetSlip = ({
   handleStartGame,
   isAtLeastOneBoxWin,
   handleCashOut,
+  current_multiplier,
 }) => {
   const [showSettings, setShowSettings] = useState(false);
 
@@ -35,7 +36,7 @@ const BetSlip = ({
           <div className="control__group">
             <div className="button-primary _w48 _br-tr0 _br-br0">
               <div
-                onClick={() => setBetAmount(100)}
+                onClick={() => setBetAmount(50)}
                 className="button-primary__inner"
               >
                 <div className="button-primary__content">min</div>
@@ -238,27 +239,21 @@ const BetSlip = ({
                 </div>
               </div>
             </div>
-            {isAtLeastOneBoxWin && isStartGame ? (
-              <div onClick={handleCashOut} className="control__button">
+            {isStartGame ? (
+              <div
+                style={{ pointerEvents: isAtLeastOneBoxWin ? "auto" : "none" }}
+                onClick={handleCashOut}
+                className="control__button"
+              >
                 <div className="cashout">
                   <div className="cashout__layout1"></div>
                   <div className="cashout__layout2"></div>
                   <div className="cashout__layout3"></div>
                   <div className="cashout__layout4">
-                    <div className="cashout__sum">{betAmount}</div>
+                    <div className="cashout__sum">{current_multiplier}</div>
                   </div>
                   <div className="cashout__layout5"></div>
                   <div className="cashout__text">Cash Out</div>
-                </div>
-              </div>
-            ) : isStartGame ? (
-              <div onClick={handleStartGame} className="control__button">
-                <div className="cancel">
-                  <div className="cancel__layout1"></div>
-                  <div className="cancel__layout2"></div>
-                  <div className="cancel__layout3"></div>
-                  <div className="cancel__layout4"></div>
-                  <div className="cancel__text">Cancel</div>
                 </div>
               </div>
             ) : (

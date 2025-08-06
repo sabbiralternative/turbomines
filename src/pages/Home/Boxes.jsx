@@ -13,6 +13,9 @@ const Boxes = ({
   addOrder,
   selectedBoxes,
   setSelectedBoxes,
+  setCurrentMultiplier,
+  current_multiplier,
+  winMultiplier,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
   // const [loadingBoxId, setLoadingBoxId] = useState(null);
@@ -48,6 +51,10 @@ const Boxes = ({
           setBoxData(updatedBoxes);
           setIsStartGame(false);
         } else {
+          setCurrentMultiplier(
+            (Number(res?.current_multiplier) * betAmount).toFixed(2)
+          );
+
           const updatedBoxes = boxData?.map((boxObj) =>
             box?.id === boxObj.id
               ? {
@@ -111,9 +118,9 @@ const Boxes = ({
           <div className="win">
             <div className="win__inner">
               <div className="win__title">You win!</div>
-              <div className="win__sum">{betAmount}</div>
+              <div className="win__sum">{current_multiplier}</div>
               <div className="win__coefficient">
-                Multiplier <span>x1.19</span>
+                Multiplier <span>x{winMultiplier}</span>
               </div>
               <div className="win__wave"></div>
             </div>
