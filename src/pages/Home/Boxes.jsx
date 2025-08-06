@@ -22,6 +22,7 @@ const Boxes = ({
   setCurrentMultiplier,
   current_multiplier,
   winMultiplier,
+  boxes,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
   const { sound } = useSound();
@@ -43,6 +44,7 @@ const Boxes = ({
           box_count: activeBoxCount,
           eventId: 20002,
           selected_tiles: [...selectedBoxes, box?.id],
+          total_tiles: boxes[boxGrid],
         },
       ];
       const res = await addOrder(payload).unwrap();

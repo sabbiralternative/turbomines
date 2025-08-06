@@ -97,6 +97,7 @@ const Home = () => {
           type: "bet",
           mines_count: mines,
           round_id,
+          total_tiles: boxes[boxGrid],
         },
       ];
       const res = await addOrder(payload).unwrap();
@@ -134,6 +135,7 @@ const Home = () => {
         box_count: activeBoxCount,
         eventId: 20002,
         selected_tiles: selectedBoxes,
+        total_tiles: boxes[boxGrid],
       },
     ];
 
@@ -203,6 +205,7 @@ const Home = () => {
         <div className="template__inner">
           <div className="template__portrait-logo" />
           <Boxes
+            boxes={boxes}
             current_multiplier={current_multiplier}
             winMultiplier={winMultiplier}
             setCurrentMultiplier={setCurrentMultiplier}
