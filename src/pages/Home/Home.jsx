@@ -6,6 +6,12 @@ import { useOrderMutation } from "../../redux/features/events/events";
 import { generateRoundId } from "../../utils/generateRoundId";
 import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/auth";
+import { useSound } from "../../context/ApiProvider";
+import {
+  playBetSound,
+  playCashOutSound,
+  playStakeSound,
+} from "../../utils/sound";
 const minesNumber = {
   3: [2, 3, 5, 7],
   5: [3, 5, 7, 10],
@@ -20,6 +26,7 @@ const boxes = {
 };
 
 const Home = () => {
+  const { sound } = useSound();
   const { mutate: handleAuth } = useAuth();
   const [addOrder] = useOrderMutation();
   const [betAmount, setBetAmount] = useState(50);
@@ -47,6 +54,9 @@ const Home = () => {
   const activeBoxCount = boxData.filter((box) => box.win).length;
 
   const handleChangeBetAmount = (type) => {
+    if (sound) {
+      playStakeSound();
+    }
     if (type === "minus") {
       if (betAmount > 0 && betAmount <= 100) {
         setBetAmount((prev) => Math.max(prev - 10, 0));
@@ -69,6 +79,9 @@ const Home = () => {
 
   const handleStartGame = async () => {
     if (betAmount) {
+      if (sound) {
+        playBetSound();
+      }
       setWinMultiplier(null);
       setSelectedBoxes([]);
       setBoxData(initialBoxData);
@@ -126,6 +139,9 @@ const Home = () => {
 
     const res = await addOrder(payload).unwrap();
     if (res?.success) {
+      if (sound) {
+        playCashOutSound();
+      }
       setWinMultiplier(res?.win_multiplier);
       const findBoxAndChange = boxData?.map((boxObj, i) => ({
         ...boxObj,

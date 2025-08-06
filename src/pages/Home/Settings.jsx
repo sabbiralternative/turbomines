@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../hooks/closeModal";
 import { cn } from "../../utils/cn";
+import { useSound } from "../../context/ApiProvider";
+import { playSettingsSound, playStakeSound } from "../../utils/sound";
 
 const Settings = ({
   setShowSettings,
@@ -12,6 +14,7 @@ const Settings = ({
   setMines,
   setBoxGrid,
 }) => {
+  const { sound } = useSound();
   const minesNumbers = {
     3: [2, 3, 5, 7],
     5: [3, 5, 7, 10],
@@ -29,6 +32,9 @@ const Settings = ({
   });
 
   const handleDecreaseMines = (type) => {
+    if (sound) {
+      playSettingsSound();
+    }
     const maxWicket = boxGrid * boxGrid - 1;
 
     if (type === "minus") {
@@ -62,7 +68,12 @@ const Settings = ({
                     `button-secondary`,
                     number === boxGrid && "_active"
                   )}
-                  onClick={() => setBoxGrid(number)}
+                  onClick={() => {
+                    setBoxGrid(number);
+                    if (sound) {
+                      playSettingsSound();
+                    }
+                  }}
                 >
                   {number}x{number}
                 </div>
@@ -108,7 +119,12 @@ const Settings = ({
             <div className="control-group__row">
               {minesNumbers[boxGrid].map((mine) => (
                 <div
-                  onClick={() => setMines(mine)}
+                  onClick={() => {
+                    setMines(mine);
+                    if (sound) {
+                      playSettingsSound();
+                    }
+                  }}
                   key={mine}
                   className="button-secondary"
                 >
@@ -151,7 +167,12 @@ const Settings = ({
             </div>
             <div className="control-group__row">
               <div
-                onClick={() => setBetAmount(10)}
+                onClick={() => {
+                  setBetAmount(10);
+                  if (sound) {
+                    playStakeSound();
+                  }
+                }}
                 className="button-secondary"
               >
                 min
@@ -169,7 +190,12 @@ const Settings = ({
                 <i className="iconFont iconFont-plus" />
               </div>
               <div
-                onClick={() => setBetAmount(10000)}
+                onClick={() => {
+                  setBetAmount(10000);
+                  if (sound) {
+                    playStakeSound();
+                  }
+                }}
                 className="button-secondary"
               >
                 max

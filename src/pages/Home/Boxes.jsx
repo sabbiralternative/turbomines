@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { cn } from "../../utils/cn";
+import { useSound } from "../../context/ApiProvider";
+import {
+  playDiamondSound,
+  playMineSound,
+  playTileSound,
+} from "../../utils/sound";
 
 const Boxes = ({
   isStartGame,
@@ -18,10 +24,14 @@ const Boxes = ({
   winMultiplier,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
+  const { sound } = useSound();
   // const [loadingBoxId, setLoadingBoxId] = useState(null);
 
   const handleBoxClick = async (box) => {
     if (isStartGame) {
+      if (sound) {
+        playTileSound();
+      }
       // setLoadingBoxId(box.id);
 
       const round_id = sessionStorage.getItem("round_id");
@@ -40,6 +50,9 @@ const Boxes = ({
       if (res.success) {
         setSelectedBoxes((prev) => [...prev, box?.id]);
         if (res?.gem === 0) {
+          if (sound) {
+            playMineSound();
+          }
           const updatedBoxes = boxData?.map((boxObj, i) => ({
             ...boxObj,
             roundEnd: true,
@@ -51,6 +64,9 @@ const Boxes = ({
           setBoxData(updatedBoxes);
           setIsStartGame(false);
         } else {
+          if (sound) {
+            playDiamondSound();
+          }
           setCurrentMultiplier(
             (Number(res?.current_multiplier) * betAmount).toFixed(2)
           );

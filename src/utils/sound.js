@@ -1,14 +1,12 @@
 import sound from "../assets/sound";
 
-export const playBetSound = () => {
-  return new Audio(sound.bet).play();
-};
-export const playSelectSound = () => {
-  return new Audio(sound.select).play();
-};
-export const playStakeSound = () => {
-  return new Audio(sound.stake).play();
-};
-export const playWinSound = () => {
-  return new Audio(sound.win).play();
-};
+const playSound = (src) => new Audio(src).play();
+
+export const playBetSound = () => playSound(sound.bet);
+export const playCashOutSound = () => playSound(sound.cashOut);
+export const playDiamondSound = () => playSound(sound.diamond);
+export const playMineSound = () => playSound(sound.mine);
+export const playSettingsSound = () => playSound(sound.settings);
+export const playStakeSound = () => playSound(sound.stake);
+export const playTileSound = () => playSound(sound.tile);
+export const playTurboSound = () => playSound(sound.turbo);
