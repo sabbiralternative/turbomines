@@ -58,7 +58,7 @@ const Boxes = ({
           const updatedBoxes = boxData?.map((boxObj, i) => ({
             ...boxObj,
             roundEnd: true,
-            win: res?.all?.[i] === 0 ? false : true,
+            // showWin: res?.all?.[i] === 0 ? false : true,
             mine: res?.all?.[i] === 0 ? true : false,
             showBox: boxObj.mine ? false : boxObj.win ? false : true,
             opacityFull: boxObj.win || box.id === boxObj.id ? true : false,
@@ -106,6 +106,7 @@ const Boxes = ({
                 className={cn(
                   "game__item",
                   box?.win && "_diamondBlue",
+                  // box?.win || box?.showWin ? "_diamondBlue" : "",
                   box?.mine && box?.roundEnd && box?.opacityFull && "_bomb",
                   box?.mine &&
                     box?.roundEnd &&

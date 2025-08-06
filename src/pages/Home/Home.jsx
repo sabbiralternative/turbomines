@@ -39,6 +39,7 @@ const Home = () => {
   const [isDesktop, setIsDesktop] = useState(false);
   const [current_multiplier, setCurrentMultiplier] = useState(0);
   const [winMultiplier, setWinMultiplier] = useState(null);
+  const [autoCashOut, setAutoCashOut] = useState(true);
 
   const initialBoxData = Array.from({ length: boxes[boxGrid] }, (_, i) => ({
     name: `box${i + 1}`,
@@ -52,6 +53,7 @@ const Home = () => {
   const [boxData, setBoxData] = useState(initialBoxData);
   const isAtLeastOneBoxWin = boxData.some((box) => box.win);
   const activeBoxCount = boxData.filter((box) => box.win).length;
+  // const activeBox = boxData.filter((box) => box.win);
 
   const handleChangeBetAmount = (type) => {
     if (sound) {
@@ -102,6 +104,7 @@ const Home = () => {
       ];
       const res = await addOrder(payload).unwrap();
       if (res?.success) {
+        setAutoCashOut(true);
         handleAuth();
         setIsStartGame(true);
         setCurrentMultiplier(
@@ -141,6 +144,7 @@ const Home = () => {
 
     const res = await addOrder(payload).unwrap();
     if (res?.success) {
+      setAutoCashOut(false);
       if (sound) {
         playCashOutSound();
       }
@@ -190,6 +194,16 @@ const Home = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (activeBoxCount === boxes[boxGrid] - mines && autoCashOut) {
+      handleCashOut();
+    }
+  }, [boxData]);
+
+  // console.log("mine", boxes[boxGrid] - mines);
+  // console.log("activeBoxCount", activeBoxCount);
+  // console.log("activeBox", activeBox);
 
   return (
     <div
