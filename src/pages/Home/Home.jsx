@@ -12,6 +12,7 @@ import {
   playCashOutSound,
   playStakeSound,
 } from "../../utils/sound";
+import { useSelector } from "react-redux";
 const minesNumber = {
   3: [2, 3, 5, 7],
   5: [3, 5, 7, 10],
@@ -26,6 +27,8 @@ const boxes = {
 };
 
 const Home = () => {
+  const errorMessage = sessionStorage.getItem("errorMessage");
+  const { token } = useSelector((state) => state.auth);
   const { sound } = useSound();
   const { mutate: handleAuth } = useAuth();
   const [addOrder] = useOrderMutation();
@@ -105,7 +108,7 @@ const Home = () => {
       const res = await addOrder(payload).unwrap();
       if (res?.success) {
         setAutoCashOut(true);
-        handleAuth();
+        handleAuth(token);
         setIsStartGame(true);
         setCurrentMultiplier(
           (Number(res?.current_multiplier) * betAmount).toFixed(2)
@@ -144,6 +147,7 @@ const Home = () => {
 
     const res = await addOrder(payload).unwrap();
     if (res?.success) {
+      handleAuth(token);
       setAutoCashOut(false);
       if (sound) {
         playCashOutSound();
@@ -205,7 +209,7 @@ const Home = () => {
   // console.log("activeBoxCount", activeBoxCount);
   // console.log("activeBox", activeBox);
 
-  return (
+  return token ? (
     <div
       id="app"
       style={{
@@ -250,6 +254,13 @@ const Home = () => {
             setBetAmount={setBetAmount}
           />
         </div>
+      </div>
+    </div>
+  ) : (
+    <div className="error-container">
+      <div className="alert alert-danger text-center m-0 " role="alert">
+        {errorMessage ||
+          "URL parameters are missing or invalid. Key: token | Value"}
       </div>
     </div>
   );
