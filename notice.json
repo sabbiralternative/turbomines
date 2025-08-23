@@ -7,7 +7,7 @@
     "settings": {
       "siteTitle": "Turbo Mines",
       "disabledDevtool": false,
-      "baseUrl": "/turbo_mines",
+      "baseUrl": "",
       "lobby": "https://aura365.io"
     },
 
